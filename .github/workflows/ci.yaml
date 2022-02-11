@@ -1,0 +1,28 @@
+name: GitHub Pages
+
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+          fail-fast: false
+          matrix: 
+            os: [ macos-10.15, macos-11.0, ubuntu-latest ]
+
+       
+        steps:
+        - uses: actions/checkout@v1
+
+        - name: install and build
+          run: npm install && npm run build
+
+        - name: Intall gh-pages
+          run: npm i -g @koumoul/gh-pages-multi
+
+        - name: Generate documents
+          run: gh-pages-multi deploy
